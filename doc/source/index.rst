@@ -4,19 +4,21 @@
 Welcome to Entsoe-py's documentation!
 ======================================
 
-.. toctree::
-   :maxdepth: 4
-   :caption: Contents:
-   :ref:`entsoe-py`
-   :ref:`settings`
-   :ref:`tests`
-   :ref:`modules`
-
 This is the documentation for the **Entsoe-py** python API wrapper.
 It provides access to the API of the `Entso-e Transparancy <https://transparency.entsoe.eu/>`_ 
-web service.
+web service. To use this API you need to register and get an API key.
 
 For details on the API please check the `API documentation <https://transparency.entsoe.eu/content/static_content/Static%20content/web%20api/Guide.html>`_
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents
+   
+   entsoe <entsoe>
+   modules <modules>
+   sphinx_setup <sphinx_setup.rst>
+
+
 
 Indices and tables
 ==================
@@ -34,7 +36,7 @@ The source can be found at
 
 License
 =======
-Entsoe-py is MIT licensed
+Entsoe-py is MIT Licensed - Copyright (c) 2017 EnergieID cvba-so
 
 Format rst-files
 ================

@@ -41,7 +41,7 @@ release = '0.1.12'
 
 language = None
 
-exclude_patterns = []
+exclude_patterns = ['setup.py']
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'sphinx'

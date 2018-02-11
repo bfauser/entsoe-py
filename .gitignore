@@ -9,10 +9,11 @@ __pycache__/
 # Distribution / packaging
 .Python
 env/
-build/
 config/
 develop-eggs/
 dist/
+doc/build/doctrees/
+doc/build/html/_*
 downloads/
 eggs/
 .eggs/
