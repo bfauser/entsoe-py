@@ -11,5 +11,5 @@ EnergieID.be `original project <https://github.com/EnergieID/entsoe-py>`_
 
 This fork adds:
 
-- Unit testing (just started), using `**nose2** <https://nose2.readthedocs.io/en/latest/>`_
-- Documentation of teh package using `**sphinx** <http://www.sphinx-doc.org/en/stable/>`_ 
+- Unit testing (just started), using **`nose2 <https://nose2.readthedocs.io/en/latest/>`_**
+- Documentation of the package using **`sphinx <http://www.sphinx-doc.org/en/stable/>`_ **
