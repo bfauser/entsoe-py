@@ -1,16 +1,5 @@
 # _*_ encoding utf-8 _*_
 
-"""
-Unit tests for entsoe-py
-========================
-
-Use with nose2, from base directory issue:
-
-.. code:
-  > nose2 tests
-
-"""
-
 import sys
 import os
 import unittest
@@ -19,13 +8,16 @@ from bs4 import BeautifulSoup
 import entsoe.entsoe as ent
 
 class TestCase(unittest.TestCase):
-
+    """
+	test class for entsoe-py package. 
+	
+	"""
     def setUp(self):
         """
         setUp of *UnitTests* for requests we need a SECRET_KEY,
         which we import from an environement variable. Set this
         variable as follows:
-        .. code:
+        .. code::
         > set ENTSOE_SECRET_KEY=my very secret api keys
 
         """

@@ -3,6 +3,19 @@ import requests
 from bs4 import BeautifulSoup
 from time import sleep
 
+"""
+entsoe-py package has some constants, it exports
+
+- ``__title__``
+- ``__version__``
+- ``__author__``
+- ``__license__``
+- ``URL``
+- ``DOMAIN_MAPPINGS``
+- ``TIMEZONE_MAPPINGS``
+- ``Entsoe``
+"""
+
 __title__ = "entsoe-py"
 __version__ = "0.1.12"
 __author__ = "EnergieID.be"
