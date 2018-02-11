@@ -1,5 +1,16 @@
 # _*_ encoding utf-8 _*_
 
+"""
+Unit tests for entsoe-py
+========================
+
+Use with nose2, from base directory issue:
+
+.. code:
+  > nose2 tests
+
+"""
+
 import sys
 import os
 import unittest
@@ -10,16 +21,42 @@ import entsoe.entsoe as ent
 class TestCase(unittest.TestCase):
 
     def setUp(self):
+        """
+        setUp of *UnitTests* for requests we need a SECRET_KEY,
+        which we import from an environement variable. Set this
+        variable as follows:
+        .. code:
+        > set ENTSOE_SECRET_KEY=my very secret api keys
+
+        """
         global ENTSOE_SECRET_KEY
         ENTSOE_SECRET_KEY = os.environ.get('ENTSOE_SECRET_KEY') or None
         if ENTSOE_SECRET_KEY == None:
             raise ValueError('You need to set the environment variable ENTSOE_SECRET_KEY to your private app.Key')
 
     def tearDown(self):
+        """tearDown of *UnitTests*, e.g. close db, session and other structures.
+           Here we do nothing.
+
+        """
         pass
 
 
     def test_basic_request(self):
+        """Test *basic_request* of the entsoe package. We make a basic_request
+        request for one day 2018-01-27. We have in test_data the XML response
+        and check the following:
+
+        - check if the request got status code 200
+        - check if test data could be loaded from disk
+        - check how many <TimeSeries> tags were found in the present request
+          and from the stored test data
+        - find start and end time of request and compare that with
+          o the time set in the request
+          o the time recieved from the online request
+          o the time recieved from the test data file
+
+        """
         global ENTSOE_SECRET_KEY
         # set domain and timezone
         domain = ent.DOMAIN_MAPPINGS['DE']
