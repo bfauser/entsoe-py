@@ -16,4 +16,9 @@ Go to the base directory of the package and run there
 
    > nose2 tests
 
+Run a single test like this
+.. code::
+
+   > nose2 tests.tests.TestCase.test_price_request
+
 """

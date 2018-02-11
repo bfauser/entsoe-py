@@ -9,9 +9,9 @@ import entsoe.entsoe as ent
 
 class TestCase(unittest.TestCase):
     """
-	test class for entsoe-py package. 
-	
-	"""
+    test class for entsoe-py package. 
+    
+    """
     def setUp(self):
         """
         setUp of *UnitTests* for requests we need a SECRET_KEY,
@@ -114,6 +114,33 @@ class TestCase(unittest.TestCase):
         assert end_tm.year == pd_end2.year
         assert end_tm.day == pd_end2.day
         assert end_tm.hour == pd_end2.hour
+
+    def test_price_request(self):
+        """test price request"""
+        global ENTSOE_SECRET_KEY
+        # set domain and timezone
+        domain = ent.DOMAIN_MAPPINGS['DE']
+        tmzone = ent.TIMEZONE_MAPPINGS['DE']
+        # initialize Enstoe class
+        ent_app = ent.Entsoe(ENTSOE_SECRET_KEY)
+        country_code = 'DE'
+        domain = ent.DOMAIN_MAPPINGS[country_code]
+        params = {
+            'documentType': 'A25',
+			'businessType': 'B07',
+			'contract_MarketAgreement.Type': 'A01',
+            'in_Domain': domain,
+            'out_Domain': domain
+        }
+        # setup start and end time for request
+        start_tm = pd.datetime(2018,1,27)
+        end_tm = pd.datetime(2018,1,28)
+        # make request to entso-e
+        result = ent_app.query_price(country_code, start_tm, end_tm)
+        # check if request worked
+        #assert result.status_code == 200
+        print(ent_app.__dict__)
+        print(result)
 
 if __name__ == '__main__':
     unittest.main()
