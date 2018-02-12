@@ -6,12 +6,14 @@ parse XML document and time series data from Entso-e API into a pandas data
 frame.
 """
 
-
+import logging
 import bs4
 import pandas as pd
 
 from .entsoe import PSRTYPE_MAPPINGS
 
+logger = logging.getLogger(__name__ +'-api')
+logger.addHandler(logging.NullHandler())
 
 def _extract_timeseries(xml_text):
     """
@@ -137,6 +139,7 @@ def _parse_datetimeindex(soup):
     start = pd.Timestamp(soup.find('start').text)
     end = pd.Timestamp(soup.find('end').text)
     delta = _resolution_to_timedelta(res_text=soup.find('resolution').text)
+    logger.info('delta is %s', delta)
     index = pd.date_range(start=start, end=end, freq=delta, closed='left')
     return index
 
@@ -153,7 +156,9 @@ def _resolution_to_timedelta(res_text):
     -------
     str
     """
-    if res_text == 'PT60M':
+    if res_text == 'PT15M':
+        delta = '15min'
+    elif res_text == 'PT60M':
         delta = '60min'
     elif res_text == 'P1Y':
         delta = '12M'
