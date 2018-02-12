@@ -34,11 +34,38 @@ The source can be found at
 - `Jan Pecinovsky's <https://github.com/JrtPec>`_ EnergieID.be `original project <https://github.com/EnergieID/entsoe-py>`_
 - `BF's fork <https://github.com/bfauser/entsoe-py>`_
 
+Running Tests with ``nose2``
+============================
+
+To run all tests, go to the base directory of the package and run
+.. code::
+   
+   > nose2 tests
+   
+To run a single test you can specify the name of the test case
+.. code::
+   
+   > nose2 tests.tests.TestCase.test_price_request
+
+To see logging informaton from the module you can run
+.. code::
+
+   > nose2 tests  --log-capture
+   > nose2 tests.tests.TestCase.test_price_request --log-capture
+
+and alike.
+
+.. note::
+
+   Logging is experimental and might behave in unexpected ways.   
+   
+   
 License
 =======
 Entsoe-py is MIT Licensed - Copyright (c) 2017 EnergieID cvba-so
 
-Format rst-files
-================
 
-`reStrurctured cheat sheet: <https://thomas-cokelaer.info/tutorials/sphinx/rest_syntax.html>`_
+rst-file Helpers
+----------------
+
+Format rst-files: `reStrurctured cheat sheet: <https://thomas-cokelaer.info/tutorials/sphinx/rest_syntax.html>`_

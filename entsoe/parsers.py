@@ -1,3 +1,12 @@
+"""
+parser
+======
+
+parse XML document and time series data from Entso-e API into a pandas data
+frame.
+"""
+
+
 import bs4
 import pandas as pd
 

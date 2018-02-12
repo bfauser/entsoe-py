@@ -21,4 +21,5 @@ Run a single test like this
 
    > nose2 tests.tests.TestCase.test_price_request
 
+where in the mdoule ``tests`` we have test routine with name ``test_price_request``.
 """

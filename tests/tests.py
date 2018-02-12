@@ -1,6 +1,7 @@
 # _*_ encoding utf-8 _*_
 
-import sys
+#import sys
+#import logging
 import os
 import unittest
 import pandas as pd
@@ -32,7 +33,6 @@ class TestCase(unittest.TestCase):
 
         """
         pass
-
 
     def test_basic_request(self):
         """Test *basic_request* of the entsoe package. We make a basic_request
@@ -119,18 +119,17 @@ class TestCase(unittest.TestCase):
         """test price request"""
         global ENTSOE_SECRET_KEY
         # set domain and timezone
-        domain = ent.DOMAIN_MAPPINGS['DE']
-        tmzone = ent.TIMEZONE_MAPPINGS['DE']
+        domain = ent.DOMAIN_MAPPINGS['CH']
+        tmzone = ent.TIMEZONE_MAPPINGS['CH']
         # initialize Enstoe class
         ent_app = ent.Entsoe(ENTSOE_SECRET_KEY)
-        country_code = 'DE'
+        country_code = 'CH'
         domain = ent.DOMAIN_MAPPINGS[country_code]
-        params = {
-            'documentType': 'A25',
-			'businessType': 'B07',
-			'contract_MarketAgreement.Type': 'A01',
-            'in_Domain': domain,
-            'out_Domain': domain
+        params = {'documentType': 'A44',
+			          'businessType': 'B07',
+			          #'contract_MarketAgreement.Type': 'A01',
+                  'in_Domain': domain,
+                  'out_Domain': domain,
         }
         # setup start and end time for request
         start_tm = pd.datetime(2018,1,27)
@@ -139,8 +138,6 @@ class TestCase(unittest.TestCase):
         result = ent_app.query_price(country_code, start_tm, end_tm)
         # check if request worked
         #assert result.status_code == 200
-        print(ent_app.__dict__)
-        print(result)
-
+        
 if __name__ == '__main__':
     unittest.main()

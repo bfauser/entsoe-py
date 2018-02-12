@@ -1,8 +1,4 @@
-import pytz
-import requests
-from bs4 import BeautifulSoup
-from time import sleep
-
+# _*_ encoding utf-8 _*_
 """
 entsoe-py package has some constants, it exports
 
@@ -15,6 +11,12 @@ entsoe-py package has some constants, it exports
 - ``TIMEZONE_MAPPINGS``
 - ``Entsoe``
 """
+
+import logging
+import pytz
+import requests
+from bs4 import BeautifulSoup
+from time import sleep
 
 __title__ = "entsoe-py"
 __version__ = "0.1.12"
@@ -140,6 +142,8 @@ PSRTYPE_MAPPINGS = {
     'B23': 'Substation',
     'B24': 'Transformer'}
 
+log = logging.getLogger(__name__ +'-api')
+log.addHandler(logging.NullHandler())
 
 class Entsoe:
     """
@@ -156,8 +160,10 @@ class Entsoe:
         session : requests.Session
         proxies : dict
             requests proxies
-        
+
         """
+#        self.logger = logging.getLogger('entsoe-py').addHandler(logging.NullHandler())
+        self.logger = log
         if api_key is None:
             raise TypeError("API key cannot be None")
         self.api_key = api_key
@@ -203,13 +209,18 @@ class Entsoe:
                 if len(text):
                     error_text = soup.find('text').text
                     if 'No matching data found' in error_text:
+                        self.logger.erroe('HTTP Error, no data found in %s', error_text)
                         return None
                 print("HTTP Error, retrying in {} seconds".format(self.retry_delay))
+                self.logger.info('HTTP Error, retrying in %s seconds', self.retry_delay)
                 sleep(self.retry_delay)
             else:
+                self.logger.info('HTTP request processed')
                 return response
         else:
-            raise error
+            self.logger.info('HTTP request did not succed after %s retries', self.retry_delay)
+            return None
+#           raise IOError(error) # or raise Error?
 
     @staticmethod
     def _datetime_to_str(dtm):
@@ -257,13 +268,16 @@ class Entsoe:
         }
         response = self.base_request(params=params, start=start, end=end)
         if response is None:
+            self.logger.info('HTTP request returned nothing')
             return None
         if not as_series:
+            self.logger.info('HTTP request processed - XML')
             return response.text
         else:
             from . import parsers
             series = parsers.parse_prices(response.text)
             series = series.tz_convert(TIMEZONE_MAPPINGS[country_code])
+            self.logger.info('HTTP request processed - pandas')
             return series
 
     def query_generation_forecast(self, country_code, start, end, as_dataframe=False, psr_type=None, squeeze=False):
@@ -298,8 +312,10 @@ class Entsoe:
             params.update({'psrType': psr_type})
         response = self.base_request(params=params, start=start, end=end)
         if response is None:
+            self.logger.info('HTTP request returned nothing')
             return None
         if not as_dataframe:
+            self.logger.info('HTTP request processed - XML')
             return response.text
         else:
             from . import parsers
@@ -307,6 +323,7 @@ class Entsoe:
             df = df.tz_convert(TIMEZONE_MAPPINGS[country_code])
             if squeeze:
                 df = df.squeeze()
+            self.logger.info('HTTP request processed - pandas')
             return df
 
     def query_generation(self, country_code, start, end, as_dataframe=False, psr_type=None, squeeze=False):
@@ -341,8 +358,10 @@ class Entsoe:
             params.update({'psrType': psr_type})
         response = self.base_request(params=params, start=start, end=end)
         if response is None:
+            self.logger.info('HTTP request returned nothing')
             return None
         if not as_dataframe:
+            self.logger.info('HTTP request processed - XML')
             return response.text
         else:
             from . import parsers
@@ -350,6 +369,7 @@ class Entsoe:
             df = df.tz_convert(TIMEZONE_MAPPINGS[country_code])
             if squeeze:
                 df = df.squeeze()
+            self.logger.info('HTTP request processed - pandas')
             return df
 
     def query_installed_generation_capacity(self, country_code, start, end, as_dataframe=False, psr_type=None, squeeze=False):
@@ -383,8 +403,10 @@ class Entsoe:
             params.update({'psrType': psr_type})
         response = self.base_request(params=params, start=start, end=end)
         if response is None:
+            self.logger.info('HTTP request returned nothing')
             return None
         if not as_dataframe:
+            self.logger.info('HTTP request processed - XML')
             return response.text
         else:
             from . import parsers
@@ -392,4 +414,5 @@ class Entsoe:
             df = df.tz_convert(TIMEZONE_MAPPINGS[country_code])
             if squeeze:
                 df = df.squeeze()
+            self.logger.info('HTTP request processed - pandas')
             return df
