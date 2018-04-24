@@ -1,4 +1,4 @@
-# _*_ encoding utf-8 _*_
+# _*_ coding utf-8 _*_
 
 #import sys
 #import logging
@@ -126,8 +126,8 @@ class TestCase(unittest.TestCase):
         country_code = 'CH'
         domain = ent.DOMAIN_MAPPINGS[country_code]
         params = {'documentType': 'A44',
-			          'businessType': 'B07',
-			          #'contract_MarketAgreement.Type': 'A01',
+                  'businessType': 'B07',
+                 #'contract_MarketAgreement.Type': 'A01',
                   'in_Domain': domain,
                   'out_Domain': domain,
         }
